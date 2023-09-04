@@ -1,64 +1,77 @@
 <!DOCTYPE html>
 <html>
-  <head>
+<head>
     <title>Twilio Voice JavaScript SDK Quickstart</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="static/site.css" />
-  </head>
-  <body>
-    <header>
-      <h1>Twilio Voice JavaScript SDK Quickstart</h1>
-      <button id="startup-button">Start up the Device</button>
-    </header>
-    <main id="controls">
-      <section class="left-column" id="info">
-        <h2>Your Device Info</h2>
-        <div id="client-name"></div>
-        <div id="output-selection" class="hide">
-          <label>Ringtone Devices</label>
-          <select id="ringtone-devices" multiple></select>
-          <label>Speaker Devices</label>
-          <select id="speaker-devices" multiple></select
-          ><br />
-          <button id="get-devices">Seeing "Unknown" devices?</button>
-        </div>
-      </section>
-      <section class="center-column">
-        <h2 class="instructions">Make a Call</h2>
-        <div id="call-controls" class="hide">
-          <form>
-            <label for="phone-number"
-              >Enter a phone number or client name</label
-            >
-            <input id="phone-number" type="text" placeholder="+15552221234" />
-            <button id="button-call" type="submit">Call</button>
-          </form>
-          <button id="button-hangup-outgoing" class="hide">Hang Up</button>
-          <div id="incoming-call" class="hide">
-            <h2>Incoming Call Controls</h2>
-            <p class="instructions">
-              Incoming Call from <span id="incoming-number"></span>
-            </p>
-            <button id="button-accept-incoming">Accept</button>
-            <button id="button-reject-incoming">Reject</button>
-            <button id="button-hangup-incoming" class="hide">Hangup</button>
-          </div>
-          <div id="volume-indicators" class="hide">
-            <label>Mic Volume</label>
-            <div id="input-volume"></div>
-            <br /><br />
-            <label>Speaker Volume</label>
-            <div id="output-volume"></div>
-          </div>
-        </div>
-      </section>
-      <section class="right-column">
-        <h2>Event Log</h2>
-        <div class="hide" id="log"></div>
-      </section>
-    </main>
+</head>
+<body class="bg-light">
 
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script type="text/javascript" src="static/twilio.min.js"></script>
-    <script src="static/quickstart.js"></script>
-  </body>
+<div class="container mt-5">
+    <header class="text-center mb-4">
+        <h1>Twilio Voice JavaScript SDK Quickstart</h1>
+        <button id="startup-button" class="btn btn-primary">Start up the Device</button>
+    </header>
+    <div class="row">
+        <div class="col-md-4">
+            <section class="card p-3 mb-4">
+                <h2>Your Device Info</h2>
+                <div id="client-name"></div>
+                <div id="output-selection" class="mt-3 hide">
+                    <div class="form-group">
+                        <label>Ringtone Devices</label>
+                        <select id="ringtone-devices" multiple class="form-control"></select>
+                    </div>
+                    <div class="form-group">
+                        <label>Speaker Devices</label>
+                        <select id="speaker-devices" multiple class="form-control"></select>
+                    </div>
+                    <button id="get-devices" class="btn btn-sm btn-secondary">Seeing "Unknown" devices?</button>
+                </div>
+            </section>
+        </div>
+        <div class="col-md-4">
+            <section class="card p-3 mb-4">
+                <h2 class="instructions">Make a Call</h2>
+                <div id="call-controls" class="mt-3 hide">
+                    <form>
+                        <div class="form-group">
+                            <label for="phone-number">Enter a phone number or client name</label>
+                            <input id="phone-number" type="text" placeholder="+15552221234" class="form-control" />
+                        </div>
+                        <button id="button-call" type="submit" class="btn btn-success">Call</button>
+                    </form>
+                    <button id="button-hangup-outgoing" class="btn btn-danger mt-3 hide">Hang Up</button>
+                    <div id="incoming-call" class="mt-4 hide">
+                        <h2>Incoming Call Controls</h2>
+                        <p class="instructions">
+                            Incoming Call from <span id="incoming-number"></span>
+                        </p>
+                        <button id="button-accept-incoming" class="btn btn-success">Accept</button>
+                        <button id="button-reject-incoming" class="btn btn-danger">Reject</button>
+                        <button id="button-hangup-incoming" class="btn btn-danger mt-3 hide">Hangup</button>
+                    </div>
+                    <div id="volume-indicators" class="mt-4 hide">
+                        <label>Mic Volume</label>
+                        <div id="input-volume" class="mb-4"></div>
+                        <label>Speaker Volume</label>
+                        <div id="output-volume"></div>
+                    </div>
+                </div>
+            </section>
+        </div>
+        <div class="col-md-4">
+            <section class="card p-3 mb-4">
+                <h2>Event Log</h2>
+                <div class="hide mt-3" id="log"></div>
+            </section>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" src="static/twilio.min.js"></script>
+<script src="static/quickstart.js"></script>
+</body>
 </html>
