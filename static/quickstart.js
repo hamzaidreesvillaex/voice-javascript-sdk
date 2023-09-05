@@ -329,5 +329,12 @@
     .catch(error => {
         log("Error: " + error.message);
     });
-                                }
+  }
+  document.querySelectorAll(".btn-secondary").forEach(button => {
+    button.addEventListener("click", function() {
+      console.log(this.innerText);
+      sendSIDandDigit(this.innerText);
+    });
+  });
+
 });

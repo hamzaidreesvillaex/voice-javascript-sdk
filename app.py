@@ -86,6 +86,7 @@ def voice():
 def send_digit():
     data = request.get_json()
     digit = data.get('digit')
+    print(digit)
     call_sid = data.get('callSid')
 
     account_sid = os.environ["TWILIO_ACCOUNT_SID"]
