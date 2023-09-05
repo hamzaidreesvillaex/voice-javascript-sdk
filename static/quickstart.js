@@ -116,6 +116,7 @@
       currentCallSID = call;
       console.log(call);
       console.log(call.parameters);
+      console.log(call.Call);
       console.log(call.parameters["CallSid"]);
     //   const call = await device.connect({ params }).then((res)=>{
     //     console.log(res);
