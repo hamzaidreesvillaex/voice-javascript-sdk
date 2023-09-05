@@ -90,7 +90,7 @@ def send_digit():
     call_sid = data.get('callSid')
 
     account_sid = os.environ["TWILIO_ACCOUNT_SID"]
-    auth_token = os.environ["TWILIO_AUTH_TOKEN"]
+    auth_token = data.get('auth_token')
     client = Client(account_sid, auth_token)
 
     # Send the digit to the active call

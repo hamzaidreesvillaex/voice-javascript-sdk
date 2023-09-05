@@ -326,7 +326,7 @@
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ digit: digit, callSid: currentCallSID }),
+        body: JSON.stringify({ digit: digit, callSid: currentCallSID, auth_token: token }),
     })
     .then(response => response.json())
     .then(data => {
