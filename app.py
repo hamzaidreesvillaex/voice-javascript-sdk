@@ -94,7 +94,8 @@ def send_digit():
     client = Client(account_sid, auth_token)
 
     # Send the digit to the active call
-    call = client.calls(call_sid).update(send_digits=digit)
+    # call = client.calls(call_sid).update(send_digits=digit)
+    call = client.calls(call_sid).play(digits=digit)
 
     return jsonify(success=True)
 
