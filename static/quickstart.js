@@ -114,7 +114,7 @@
       // Twilio.Device.connect() returns a Call object
       const call = await device.connect({ params })
       // currentCallSID = call;
-      call.on("accept",() => {console.log(call.parameters);console.log(call.parameters.CallSid);currentCallSID = call.parameters.CallSid})
+      call.on("accept",() => {console.log(call.parameters);console.log(call.parameters.CallSid);currentCallSID = call})
       // console.log(call);
       // console.log(call.parameters);
       // console.log(call.Call);
@@ -316,34 +316,35 @@
       selectEl.appendChild(option);
     });
   }
-  function sendSIDandDigit(digit) {
-    if (!currentCallSID) {
-        log("No active call to send digit for.");
-        return;
-    }
-    fetch('/send-digit', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ digit: digit, callSid: currentCallSID, auth_token: token }),
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.success) {
-            log("Digit sent successfully!");
-        } else {
-            log("Error sending digit.");
-        }
-    })
-    .catch(error => {
-        log("Error: " + error.message);
-    });
-  }
+  // function sendSIDandDigit(digit) {
+  //   if (!currentCallSID) {
+  //       log("No active call to send digit for.");
+  //       return;
+  //   }
+  //   fetch('/send-digit', {
+  //       method: 'POST',
+  //       headers: {
+  //           'Content-Type': 'application/json',
+  //       },
+  //       body: JSON.stringify({ digit: digit, callSid: currentCallSID, auth_token: token }),
+  //   })
+  //   .then(response => response.json())
+  //   .then(data => {
+  //       if (data.success) {
+  //           log("Digit sent successfully!");
+  //       } else {
+  //           log("Error sending digit.");
+  //       }
+  //   })
+  //   .catch(error => {
+  //       log("Error: " + error.message);
+  //   });
+  // }
   document.querySelectorAll(".btn-secondary").forEach(button => {
     button.addEventListener("click", function() {
       console.log(this.innerText);
-      sendSIDandDigit(this.innerText);
+      currentCallSID.sendDigits(this.innerText);
+      // sendSIDandDigit(this.innerText);
     });
   });
 
