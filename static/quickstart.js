@@ -114,6 +114,7 @@
       // Twilio.Device.connect() returns a Call object
       const call = await device.connect({ params });
       currentCallSID = call.sid;
+      console.log(call);
 
       // add listeners to the Call
       // "accepted" means the call has finished connecting and the state is now "open"
