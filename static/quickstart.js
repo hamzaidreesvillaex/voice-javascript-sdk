@@ -112,7 +112,7 @@
       log(`Attempting to call ${params.To} ...`);
 
       // Twilio.Device.connect() returns a Call object
-      const call = await device.connect({ params });
+      const call = await device.connect({ params }).then((res)=>{console.log(res)});
       currentCallSID = call.Call.parameters.CallSid;
       console.log(call);
       console.log(call.Call.parameters.CallSid);
