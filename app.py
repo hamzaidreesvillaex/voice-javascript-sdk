@@ -9,6 +9,7 @@ from flask import Flask, Response, jsonify, redirect, request
 from twilio.jwt.access_token import AccessToken
 from twilio.jwt.access_token.grants import VoiceGrant
 from twilio.twiml.voice_response import Dial, VoiceResponse
+from twilio.rest import Client
 
 load_dotenv()
 
@@ -81,6 +82,20 @@ def voice():
 
     return Response(str(resp), mimetype="text/xml")
 
+@app.route('/send-digit', methods=['POST'])
+def send_digit():
+    data = request.get_json()
+    digit = data.get('digit')
+    call_sid = data.get('callSid')
+
+    account_sid = os.environ["TWILIO_ACCOUNT_SID"]
+    auth_token = os.environ["TWILIO_AUTH_TOKEN"]
+    client = Client(account_sid, auth_token)
+
+    # Send the digit to the active call
+    call = client.calls(call_sid).update(send_digits=digit)
+
+    return jsonify(success=True)
 
 if __name__ == "__main__":
     app.run(debug=True, host="0.0.0.0")

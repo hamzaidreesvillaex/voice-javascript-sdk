@@ -26,6 +26,8 @@
 
   let device;
   let token;
+  let currentCallSID;
+
 
   // Event Listeners
 
@@ -36,7 +38,7 @@
   getAudioDevicesButton.onclick = getAudioDevices;
   speakerDevices.addEventListener("change", updateOutputDevice);
   ringtoneDevices.addEventListener("change", updateRingtoneDevice);
-  
+
   // SETUP STEP 1:
   // Browser client should be started after a user gesture
   // to avoid errors in the browser console re: AudioContext
@@ -111,6 +113,7 @@
 
       // Twilio.Device.connect() returns a Call object
       const call = await device.connect({ params });
+      currentCallSID = call.sid;
 
       // add listeners to the Call
       // "accepted" means the call has finished connecting and the state is now "open"
@@ -169,6 +172,7 @@
     call.on("cancel", handleDisconnectedIncomingCall);
     call.on("disconnect", handleDisconnectedIncomingCall);
     call.on("reject", handleDisconnectedIncomingCall);
+    currentCallSID = call.sid;
   }
 
   // ACCEPT INCOMING CALL
@@ -302,4 +306,28 @@
       selectEl.appendChild(option);
     });
   }
+  function sendSIDandDigit(digit) {
+    if (!currentCallSID) {
+        log("No active call to send digit for.");
+        return;
+    }
+    fetch('/send-digit', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ digit: digit, callSid: currentCallSID }),
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            log("Digit sent successfully!");
+        } else {
+            log("Error sending digit.");
+        }
+    })
+    .catch(error => {
+        log("Error: " + error.message);
+    });
+                                }
 });
