@@ -6,10 +6,12 @@ import re
 from dotenv import load_dotenv
 from faker import Faker
 from flask import Flask, Response, jsonify, redirect, request
+from flask import url_for
 from twilio.jwt.access_token import AccessToken
 from twilio.jwt.access_token.grants import VoiceGrant
 from twilio.twiml.voice_response import Dial, VoiceResponse
 from twilio.rest import Client
+from twilio.twiml.voice_response import Play, VoiceResponse
 
 load_dotenv()
 
@@ -28,6 +30,11 @@ IDENTITY = {"identity": ""}
 def index():
     return app.send_static_file("index.html")
 
+@app.route('/send-dtmf-tone/<digit>', methods=['POST'])
+def send_dtmf_tone(digit):
+    response = VoiceResponse()
+    response.play(digits=digit)
+    return str(response)
 
 @app.route("/token", methods=["GET"])
 def token():
@@ -92,10 +99,19 @@ def send_digit():
     account_sid = os.environ["TWILIO_ACCOUNT_SID"]
     auth_token = data.get('auth_token')
     client = Client(account_sid, auth_token)
-
+    try:
+        # Send the digit using the Twilio SDK
+        call = client.calls(call_sid).fetch()
+        if call.status == "in-progress":
+            client.calls(call_sid).update(url=url_for('send_dtmf_tone', digit=digit, _external=True))
+            return jsonify(status="Digit sent successfully")
+        else:
+            return jsonify(error="No active call found"), 400
+    except Exception as e:
+        return jsonify(error=str(e)), 500
     # Send the digit to the active call
     # call = client.calls(call_sid).update(send_digits=digit)
-    call = client.calls(call_sid).play(digits=digit)
+    # call = client.calls(call_sid).play(digits=digit)
 
     return jsonify(success=True)
 
