@@ -112,11 +112,16 @@
       log(`Attempting to call ${params.To} ...`);
 
       // Twilio.Device.connect() returns a Call object
-      const call = await device.connect({ params }).then((res)=>{console.log(res)});
-      currentCallSID = call.Call.parameters.CallSid;
-      console.log(call);
-      console.log(call.Call.parameters.CallSid);
-
+      // const call = await device.connect({ params }).then((res)=>{console.log(res)});
+      // currentCallSID = call.Call.parameters.CallSid;
+      // console.log(call);
+      // console.log(call.Call.parameters.CallSid);
+      const call = await device.connect({ params }).then((res)=>{
+        console.log(res);
+        currentCallSID = res.Call.parameters.CallSid;
+         console.log(res);
+         console.log(res.Call.parameters.CallSid);
+    })
       // add listeners to the Call
       // "accepted" means the call has finished connecting and the state is now "open"
       call.on("accept", updateUIAcceptedOutgoingCall);
@@ -126,7 +131,7 @@
       outgoingCallHangupButton.onclick = () => {
         log("Hanging up ...");
         call.disconnect();
-      };
+      };  
 
     } else {
       log("Unable to make call.");
