@@ -113,12 +113,12 @@
 
       // Twilio.Device.connect() returns a Call object
       const call = await device.connect({ params })
-      currentCallSID = call;
-      call.on("accept",() => {console.log(call.parameters);console.log(call.parameters.CallSid)})
-      console.log(call);
-      console.log(call.parameters);
-      console.log(call.Call);
-      console.log(call.parameters["CallSid"]);
+      // currentCallSID = call;
+      call.on("accept",() => {console.log(call.parameters);console.log(call.parameters.CallSid);currentCallSID = call.parameters.CallSid})
+      // console.log(call);
+      // console.log(call.parameters);
+      // console.log(call.Call);
+      // console.log(call.parameters["CallSid"]);
     //   const call = await device.connect({ params }).then((res)=>{
     //     console.log(res);
     //     currentCallSID = res.Call.parameters.CallSid;
@@ -182,7 +182,7 @@
     call.on("cancel", handleDisconnectedIncomingCall);
     call.on("disconnect", handleDisconnectedIncomingCall);
     call.on("reject", handleDisconnectedIncomingCall);
-    currentCallSID = call.Call.parameters.CallSid;
+    call.on("accept",() => {console.log(call.parameters);console.log(call.parameters.CallSid);currentCallSID = call.parameters.CallSid})
   }
 
   // ACCEPT INCOMING CALL
